@@ -10,7 +10,12 @@ export async function updatePlaylist(myTimer: Timer, context: InvocationContext)
   }
   console.log('Playlist ID:', playlist_id);
   console.log('URIs:', uris);
-  console.log('Output:', await UpdatePlaylist(playlist_id, uris));
+  const output = await UpdatePlaylist(playlist_id, uris);
+  if (!output || !output.snapshot_id || output.error) {
+    console.error('Failed to update playlist');
+    throw new Error('Failed to update playlist');
+  }
+  console.log('Output:', output);
 }
 
 // every one min
