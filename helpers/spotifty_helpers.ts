@@ -1,17 +1,5 @@
-import * as fs from 'fs';
-import * as os from 'os';
-
 async function fetchWebApi(endpoint: string, method: string, body: any = null) {
-  const tmpDir = os.tmpdir();
-  let token = '';
-  try {
-    token = fs.readFileSync(`${tmpDir}/token`, 'utf8').trim();
-  } catch (e) {
-    console.log('Token not found');
-    token = await getToken();
-    fs.writeFileSync(`${tmpDir}/token`, token);
-  }
-
+  const token = await getToken();
   let payload: Record<string, any> = {
     headers: {
       Authorization: `Bearer ${token}`,
