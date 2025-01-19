@@ -8,25 +8,25 @@ export async function updatePlaylist(myTimer: Timer, context: InvocationContext)
     console.error('Playlist ID or URIs not found');
     throw new Error('Playlist ID or URIs not found');
   }
-  console.log('Playlist ID:', playlist_id);
-  console.log('URIs:', uris);
+  console.info('Playlist ID:', playlist_id);
+  console.info('URIs:', uris);
   const output = await UpdatePlaylist(playlist_id, uris);
   if (!output || !output.snapshot_id || output.error) {
     console.error('Failed to update playlist');
     throw new Error('Failed to update playlist');
   }
-  console.log('Output:', output);
+  console.info('Output:', output);
 }
 
 // every one min
-/* app.timer('updatePlaylist', {
+app.timer('updatePlaylist', {
   schedule: '0 * * * * *',
   handler: updatePlaylist,
 });
- */
 
 // every one day
-app.timer('updatePlaylist', {
+/* app.timer('updatePlaylist', {
   schedule: '0 0 * * *',
   handler: updatePlaylist,
 });
+ */
