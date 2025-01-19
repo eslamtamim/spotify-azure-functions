@@ -15,14 +15,14 @@ export async function updatePlaylist(myTimer: Timer, context: InvocationContext)
 }
 
 // every one min
-app.timer('updatePlaylist', {
+/* app.timer('updatePlaylist', {
   schedule: '0 * * * * *',
   handler: updatePlaylist,
 });
+ */
 
 // every one day
-/* app.timer('updatePlaylist', {
+app.timer('updatePlaylist', {
   schedule: '0 0 * * *',
   handler: updatePlaylist,
 });
- */
