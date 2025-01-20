@@ -47,3 +47,6 @@ __blobstorage__
 __queuestorage__
 __azurite_db*__.json
 node_modules
+
+
+.prettierrc

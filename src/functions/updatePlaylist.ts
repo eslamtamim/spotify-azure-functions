@@ -1,5 +1,5 @@
 import { app, InvocationContext, Timer } from '@azure/functions';
-import { getTopTracks, UpdatePlaylist } from '../../helpers/spotifty_helpers';
+import { getTopTracks, UpdatePlaylist } from '../helpers/spotifty_helpers';
 
 export async function updatePlaylist(myTimer: Timer, context: InvocationContext) {
   const uris = (await getTopTracks())?.map((track: any) => track.uri).join(',');
