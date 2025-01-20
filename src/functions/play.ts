@@ -10,7 +10,7 @@ async function play(req: HttpRequest, _: InvocationContext): Promise<HttpRespons
     res = { set_current: 'ok', ...res };
   }
   const playing = await getCurrentPlaying();
-  res = { ...res, playing: `${playing.item.name} for ${playing.item.artists.map((e: { name: any }) => e.name).join(', ')}` };
+  res = { ...res, playing: `${playing.item.name} - ${playing.item.artists.map((e: { name: any }) => e.name).join(', ')}` };
   return new HttpResponse({
     status: 200,
     jsonBody: res,
