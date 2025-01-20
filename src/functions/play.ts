@@ -1,12 +1,19 @@
-import { app, HttpRequest, HttpResponse } from '@azure/functions';
+import { app, HttpRequest, HttpResponse, InvocationContext } from '@azure/functions';
+import { getCurrentPlaying, setCurrentPlaying } from '../helpers/spotifty_helpers';
 
-async function play(req: HttpRequest): Promise<HttpResponse> {
-  const body = await req.json();
-  const params = req.params;
-
+async function play(req: HttpRequest, _: InvocationContext): Promise<HttpResponse> {
+  const id = req.query.get('id');
+  let res: Record<string, any> = {};
+  if (id) {
+    console.log('req.url: ', req.url, 'id: ', id);
+    await setCurrentPlaying(id);
+    res = { set_current: 'ok', ...res };
+  }
+  const playing = await getCurrentPlaying();
+  res = { ...res, playing: `${playing.item.name} for ${playing.item.artists.map((e: { name: any }) => e.name).join(', ')}` };
   return new HttpResponse({
     status: 200,
-    body: JSON.stringify(params),
+    jsonBody: res,
   });
 }
-app.http('play', { route: 'play', methods: ['GET', 'POST'], handler: play });
+app.http('play', { route: 'play', methods: ['GET'], handler: play });

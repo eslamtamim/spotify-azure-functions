@@ -9,7 +9,7 @@ async function fetchWebApi(endpoint: string, method: string, body: any = null) {
   if (body) payload.body = JSON.stringify(body);
   const res = await fetch(`https://api.spotify.com/${endpoint}`, payload);
 
-  return await res.json();
+  return res.status != 204 ? await res.json() : null;
 }
 
 export async function UpdatePlaylist(playlist_id: string, uris: string) {
@@ -27,6 +27,20 @@ export async function getTopTracks() {
     console.log('No items found', res);
   }
   return items;
+}
+
+export async function getCurrentPlaying() {
+  // Endpoint reference : https://developer.spotify.com/documentation/web-api/reference/get-information-about-the-users-current-playback
+  try {
+    return await fetchWebApi('v1/me/player/currently-playing', 'GET');
+  } catch (e) {
+    console.log(e);
+    return 'No song is currently playing';
+  }
+}
+export async function setCurrentPlaying(id: string) {
+  // Endpoint reference : https://developer.spotify.com/documentation/web-api/reference/start-a-users-playback
+  return await fetchWebApi('v1/me/player/play', 'PUT', { context_uri: `spotify:album:${id}` });
 }
 
 async function getToken(): Promise<string> {
