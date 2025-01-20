@@ -1,5 +1,5 @@
 {
-  "name": "update_playlist",
+  "name": "spotify-azure-functions",
   "version": "1.0.0",
   "description": "",
   "main": "dist/src/functions/*.js",
