@@ -34,8 +34,7 @@ export async function getCurrentPlaying() {
   try {
     return await fetchWebApi('v1/me/player/currently-playing', 'GET');
   } catch (e) {
-    console.log(e);
-    return 'No song is currently playing';
+    return null;
   }
 }
 export async function setCurrentPlaying(id: string) {
