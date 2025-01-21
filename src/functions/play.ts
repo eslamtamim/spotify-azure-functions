@@ -43,7 +43,7 @@ async function play(req: HttpRequest, _: InvocationContext): Promise<HttpRespons
         </head>
         <body>
           <div>
-          ${playing.item.album.images[0]?.url && `<img src="${playing.item.album.images[0].url}" width="300" alt="album cover"/>`}
+          ${playing && playing.is_playing && playing?.item?.album?.images[0]?.url && `<img src="${playing.item.album.images[0].url}" width="300" alt="album cover"/>`}
             <p>${playing_status}</p>
           </div>
         </body>
