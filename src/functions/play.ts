@@ -2,8 +2,11 @@ import { app, HttpRequest, HttpResponse, InvocationContext } from '@azure/functi
 import { getCurrentPlaying, setCurrentPlaying } from '../helpers/spotifty_helpers';
 
 async function play(req: HttpRequest, _: InvocationContext): Promise<HttpResponse> {
-  const id = req.query.get('id');
+  let id = req.query.get('id');
   if (id) {
+    if (id.includes('track')) {
+      id = id.match(/https:\/\/open.spotify.com\/track\/([^?]+)/)[1];
+    }
     console.log('req.url: ', req.url, 'id: ', id);
     await setCurrentPlaying(id);
   }
@@ -39,7 +42,7 @@ async function play(req: HttpRequest, _: InvocationContext): Promise<HttpRespons
             }
           </style>
         </head>
-        <body>
+        <body onload="document.querySelector('input').focus();window.history.pushState({}, '', window.location.pathname);">
           <div>
           ${
             playing &&
@@ -48,6 +51,9 @@ async function play(req: HttpRequest, _: InvocationContext): Promise<HttpRespons
             `<img src="${playing.item.album.images[0].url}" width="300" alt="album cover"/>`
           }
             <p>${playing_status}</p>
+          <form action="/api/play" method="get">
+            <input type="text" name="id" placeholder="sptfy link" style="width: 300px; padding: 10px; margin-top: 20px;">
+          </form>
           </div>
         </body>
       </html>
