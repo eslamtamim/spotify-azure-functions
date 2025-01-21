@@ -19,6 +19,10 @@ export async function UpdatePlaylist(playlist_id: string, uris: string) {
   });
 }
 
+async function addToPlaylist(id: string, uris: string) {
+  return await fetchWebApi(`v1/playlists/${id}/tracks?uris=${uris}`, 'POST');
+}
+
 export async function getTopTracks() {
   // Endpoint reference : https://developer.spotify.com/documentation/web-api/reference/get-users-top-artists-and-tracks
   const res = await fetchWebApi('v1/me/top/tracks?time_range=short_term&limit=10', 'GET');
@@ -48,6 +52,7 @@ export async function setCurrentPlaying(id: string) {
     },
   };
   // Endpoint reference : https://developer.spotify.com/documentation/web-api/reference/start-a-users-playback
+  addToPlaylist(process.env['SPOTIFY_PLAYLIST_ID_SUGGESTIONS'], track.uri);
   return await fetchWebApi('v1/me/player/play', 'PUT', playBody);
 }
 
