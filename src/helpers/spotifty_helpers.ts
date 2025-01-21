@@ -34,6 +34,7 @@ export async function getCurrentPlaying() {
   try {
     return await fetchWebApi('v1/me/player/currently-playing', 'GET');
   } catch (e) {
+    console.error(e);
     return null;
   }
 }
