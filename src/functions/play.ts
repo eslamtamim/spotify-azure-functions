@@ -3,11 +3,9 @@ import { getCurrentPlaying, setCurrentPlaying } from '../helpers/spotifty_helper
 
 async function play(req: HttpRequest, _: InvocationContext): Promise<HttpResponse> {
   const id = req.query.get('id');
-  // let res: Record<string, any> = {};
   if (id) {
     console.log('req.url: ', req.url, 'id: ', id);
     await setCurrentPlaying(id);
-    // res = { set_current: 'ok', ...res };
   }
   const playing = await getCurrentPlaying();
   const playing_status = playing.is_playing
@@ -43,7 +41,12 @@ async function play(req: HttpRequest, _: InvocationContext): Promise<HttpRespons
         </head>
         <body>
           <div>
-          ${playing && playing.is_playing && playing?.item?.album?.images[0]?.url && `<img src="${playing.item.album.images[0].url}" width="300" alt="album cover"/>`}
+          ${
+            playing &&
+            playing.is_playing &&
+            playing?.item?.album?.images[0]?.url &&
+            `<img src="${playing.item.album.images[0].url}" width="300" alt="album cover"/>`
+          }
             <p>${playing_status}</p>
           </div>
         </body>

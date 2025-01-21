@@ -38,9 +38,17 @@ export async function getCurrentPlaying() {
     return null;
   }
 }
+
 export async function setCurrentPlaying(id: string) {
+  const track = await fetchWebApi(`v1/tracks/${id}`, 'GET');
+  const playBody = {
+    context_uri: `spotify:album:${track.album.id}`,
+    offset: {
+      position: track.track_number - 1,
+    },
+  };
   // Endpoint reference : https://developer.spotify.com/documentation/web-api/reference/start-a-users-playback
-  return await fetchWebApi('v1/me/player/play', 'PUT', { context_uri: `spotify:album:${id}` });
+  return await fetchWebApi('v1/me/player/play', 'PUT', playBody);
 }
 
 async function getToken(): Promise<string> {
