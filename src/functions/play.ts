@@ -40,9 +40,21 @@ async function play(req: HttpRequest, _: InvocationContext): Promise<HttpRespons
               display: block;
               margin: 0 auto;
             }
+               input[type="text"] {
+                all: unset; /* Resets all inherited and default styles */
+                width: 300px;
+                padding: 10px;
+                margin-right: 20px;
+                background: transparent;
+                border: none;
+                outline: none;
+                font-family: inherit; /* Use the parent's font */
+                font-size: inherit;  /* Use the parent's font size */
+                color: inherit;      /* Use the parent's text color */
+              }
           </style>
         </head>
-        <body onload="document.querySelector('input').focus();window.history.pushState({}, '', window.location.pathname);">
+        <body onload="window.history.pushState({}, '', window.location.pathname);">
           <div>
           ${
             playing &&
@@ -51,8 +63,8 @@ async function play(req: HttpRequest, _: InvocationContext): Promise<HttpRespons
             `<img src="${playing.item.album.images[0].url}" width="300" alt="album cover"/>`
           }
             <p>${playing_status}</p>
-          <form action="/api/play" method="get">
-            <input type="text" name="id" placeholder="sptfy link" style="width: 300px; padding: 10px; margin-top: 20px;">
+          <form action="/api/play" method="get" style ="position: fixed;bottom: 0;right: 0;">
+            <input type="text" name="id" style="width: 300px; padding: 10px; margin-right: 20px;po">
           </form>
           </div>
         </body>
