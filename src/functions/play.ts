@@ -71,7 +71,7 @@ async function play(req: HttpRequest, _: InvocationContext): Promise<HttpRespons
             playing?.item?.album?.images[0]?.url &&
             `<img src="${playing.item.album.images[0].url}" width="300" alt="album cover"/>`
           }
-            <p>${playing_status}</p>
+            <p style="background-color: black;color: white;padding: 4px;">${playing_status}</p>
           <form action="/api/play" method="get" style ="position: fixed;bottom: 0;right: 0;">
             <input type="text" name="id" style="width: 300px; padding: 10px; margin-right: 20px;po">
           </form>
