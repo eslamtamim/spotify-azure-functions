@@ -27,6 +27,15 @@ async function play(req: HttpRequest, _: InvocationContext): Promise<HttpRespons
               margin: 0;
               font-family: Arial, sans-serif;
               text-align: center;
+              background-image: url(${
+            playing &&
+            playing.is_playing &&
+            playing?.item?.album?.images[0]?.url && playing.item.album.images[0].url
+          });
+              background-size: cover;
+              background-position: center;
+              background-repeat: no-repeat;
+              backdrop-filter: blur(70px);
             }
             h1 {
               font-size: 2em;
